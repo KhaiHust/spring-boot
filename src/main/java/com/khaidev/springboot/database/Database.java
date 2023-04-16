@@ -19,12 +19,12 @@ public class Database {
             public void run(String... args) throws Exception {
                 //logger
 
-                Product productA;
-                productA = new Product("Macbook pro 16",2020, 2400.0,"");
-                Product productB = new Product("ipad gen 9",2021, 399.0,"");
-
-                logger.info("insert data :" + productRepository.saveAndFlush(productA));
-                logger.info("insert data :" + productRepository.saveAndFlush(productB));
+//                Product productA;
+//                productA = new Product("Macbook pro 16",2020, 2400.0,"");
+//                Product productB = new Product("ipad gen 9",2021, 399.0,"");
+//
+//                logger.info("insert data :" + productRepository.saveAndFlush(productA));
+//                logger.info("insert data :" + productRepository.saveAndFlush(productB));
             }
         };
     }

@@ -2,15 +2,28 @@ package com.khaidev.springboot.models;
 
 import jakarta.persistence.*;
 
+import java.util.Calendar;
+import java.util.Objects;
+
 //POJO = Plain Object Java Object
 @Entity
+@Table(name = "tblProduct")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "product_sequence",
+            sequenceName = "product_sqquence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "product_sequence"
+    )
     @Column(name = "id")
     private long id;
-    @Column(name = "product_name")
+    @Column(name = "product_name", nullable = false, unique = true, length = 300)
     private String productName;
     @Column(name = "year1")
     private int year1;
@@ -18,6 +31,13 @@ public class Product {
     private Double price;
     @Column(name = "url")
     private String url;
+    //calculated field = transient
+    @Transient
+    private int age;//
+
+    public int getAge() {
+        return Calendar.getInstance().get(Calendar.YEAR) - year1;
+    }
 
     public Product() {
     }
@@ -80,5 +100,18 @@ public class Product {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id && year1 == product.year1 && Objects.equals(productName, product.productName) && Objects.equals(price, product.price) && Objects.equals(url, product.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, productName, year1, price, url);
     }
 }
